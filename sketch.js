@@ -5,7 +5,7 @@ var UFOGroup, UFOImg;
 var edges;
 var gameStates="start";
 var score=0;
-var fCount;
+var fCount=60;
 
 function preload() {
   backgroundIMG=loadImage("bckg.jpg");
@@ -52,11 +52,12 @@ function draw(){
     if(keyDown("up")){
       player.y = player.y-3;
     }
-      }
+
+    spawnUFOS();
+
+    score =score+Math.round(frameCount/100);
+  }
   
-
-
-  spawnUFOS();
 
   player.collide(edges[2]);
   player.collide(edges[3]);
@@ -65,20 +66,37 @@ function draw(){
   fill("white");
   textSize(20);
   text("score: "+score, 20,20);
-  score =score+Math.round(getFrameRate()/60);
+  
 }
 
 function spawnUFOS(){
-  fCount = frameCount
-  if (frameCount % 200 === 0) {
-    var UFO = createSprite(width+20,height-300,40,10);
+
+  //if(score<100){
+   fCount = frameCount
+   if (frameCount % 60 === 0) {
+    var UFO = createSprite(600,300,40,10);
     UFO.y = Math.round(random(10,590));
     UFO.addImage(UFOImg);
     UFO.scale = 0.04;
-    UFO.velocityX=-(2+score/100);
-  
-
-
+    //UFO.velocityX=-(2+score/100);
+    UFO.velocityX=-(2)
     UFOGroup.add(UFO);
-}
+   }
+ //}
+
+//   if(score%100 == 0) {
+//     fCount = fCount - 10
+//     console.log(frameCount % 80)
+//     if ( fCount>0 && frameCount % 80 ===0 ) {
+//       console.log("working")
+//       var UFO = createSprite(600,300,40,10);
+//       UFO.y = Math.round(random(10,590));
+//       UFO.addImage(UFOImg);
+//       UFO.scale = 0.04;
+//       //UFO.velocityX=-(2+score/100);
+//       UFO.velocityX=-(2)
+//       UFOGroup.add(UFO);
+//     }
+//  }
+
 }
